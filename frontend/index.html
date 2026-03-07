@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Traffic Control System - Controller Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛫 Air Traffic Control System</h1>
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-label">System Status:</span>
+                    <span id="systemStatus" class="status-value healthy">●</span>
+                </span>
+                <span class="status-item">
+                    <span class="status-label">Critical Conflicts:</span>
+                    <span id="conflictCount" class="status-value">0</span>
+                </span>
+                <span class="status-item">
+                    <span class="status-label">Last Update:</span>
+                    <span id="lastUpdate" class="status-value">--:--:--</span>
+                </span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Dashboard Overview -->
+            <section class="dashboard-overview">
+                <div class="stat-card">
+                    <h3>Aircraft</h3>
+                    <div class="stat-number" id="totalAircraft">0</div>
+                    <div class="stat-details">
+                        <span>In Air: <strong id="aircraftInAir">0</strong></span>
+                        <span>Landing: <strong id="aircraftLanding">0</strong></span>
+                        <span>Parked: <strong id="aircraftParked">0</strong></span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Runways</h3>
+                    <div class="stat-number" id="totalRunways">0</div>
+                    <div class="stat-details">
+                        <span>Available: <strong id="runwaysAvailable">0</strong></span>
+                        <span>Occupied: <strong id="runwaysOccupied">0</strong></span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Landing Queue</h3>
+                    <div class="stat-number" id="queueCount">0</div>
+                    <div class="stat-details">
+                        <span>Awaiting clearance</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conflicts Alert -->
+            <section id="conflictsSection" class="section conflicts-section" style="display: none;">
+                <h2>⚠️ Active Conflicts</h2>
+                <div id="conflictsList"></div>
+            </section>
+
+            <!-- Runways Status -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Runways Status</h2>
+                    <button class="btn btn-primary" onclick="showAddRunwayModal()">+ Add Runway</button>
+                </div>
+                <div id="runwaysList" class="grid"></div>
+            </section>
+
+            <!-- Aircraft Status -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Aircraft Status</h2>
+                    <button class="btn btn-primary" onclick="showAddAircraftModal()">+ Add Aircraft</button>
+                </div>
+                <div class="table-container">
+                    <table id="aircraftTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Model</th>
+                                <th>Size</th>
+                                <th>Status</th>
+                                <th>Altitude (ft)</th>
+                                <th>Speed (kts)</th>
+                                <th>Runway</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aircraftTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Landing Queue -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Landing Queue (FIFO)</h2>
+                    <button class="btn btn-success" onclick="processNextInQueue()">Process Next</button>
+                </div>
+                <div id="landingQueueList" class="queue-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Aircraft Modal -->
+    <div id="addAircraftModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addAircraftModal')">&times;</span>
+            <h2>Add New Aircraft</h2>
+            <form id="addAircraftForm" onsubmit="addAircraft(event)">
+                <div class="form-group">
+                    <label>Aircraft ID:</label>
+                    <input type="text" id="aircraftId" required placeholder="e.g., AC001">
+                </div>
+                <div class="form-group">
+                    <label>Model:</label>
+                    <input type="text" id="aircraftModel" required placeholder="e.g., Boeing 737">
+                </div>
+                <div class="form-group">
+                    <label>Size:</label>
+                    <select id="aircraftSize" required>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Heavy">Heavy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="aircraftStatus" required>
+                        <option value="Parked">Parked</option>
+                        <option value="In-Air">In Air</option>
+                        <option value="Taxiing">Taxiing</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Aircraft</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Runway Modal -->
+    <div id="addRunwayModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addRunwayModal')">&times;</span>
+            <h2>Add New Runway</h2>
+            <form id="addRunwayForm" onsubmit="addRunway(event)">
+                <div class="form-group">
+                    <label>Runway Name:</label>
+                    <input type="text" id="runwayName" required placeholder="e.g., RW-09L">
+                </div>
+                <div class="form-group">
+                    <label>Length (meters):</label>
+                    <input type="number" id="runwayLength" required min="1000" max="6000" placeholder="e.g., 3500">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Runway</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
