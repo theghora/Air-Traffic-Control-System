@@ -11,7 +11,7 @@ class Config:
 
     # ATC System Configuration
     MAX_RUNWAY_CAPACITY = 1  # One aircraft per runway at a time
-    RUNWAY_COOLDOWN_SECONDS = 60  # Time before runway can be reused
+    RUNWAY_COOLDOWN_SECONDS = 1  # Time before runway can be reused
 
     # Runway Length Requirements (in meters)
     RUNWAY_LENGTH_SMALL = 1500

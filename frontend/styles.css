@@ -124,11 +124,20 @@ header h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 12px;
 }
 
 .section h2 {
     font-size: 1.5rem;
     color: var(--text-primary);
+}
+
+/* Queue grid */
+.queue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
 }
 
 /* Conflicts Section */
@@ -189,9 +198,26 @@ header h1 {
     color: white;
 }
 
+.btn-warning:hover {
+    background: #d97706;
+}
+
 .btn-danger {
     background: var(--danger-color);
     color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-secondary {
+    background: #64748b;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #475569;
 }
 
 .btn-small {
@@ -263,6 +289,16 @@ header h1 {
     gap: 10px;
 }
 
+.status-badge.taxiingtogate {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.taxiingtorunway {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
 /* Table */
 .table-container {
     overflow-x: auto;
@@ -290,6 +326,7 @@ th {
 td {
     padding: 15px 12px;
     border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
 }
 
 tr:hover {
@@ -304,7 +341,8 @@ tr:hover {
     font-weight: 600;
 }
 
-.status-badge.in-air {
+.status-badge.in-air,
+.status-badge.inair {
     background: #dbeafe;
     color: #1e40af;
 }
@@ -345,6 +383,7 @@ tr:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
 }
 
 .queue-item-priority {
@@ -357,14 +396,20 @@ tr:hover {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .queue-item-details {
     flex: 1;
     margin-left: 15px;
+    min-width: 0;
 }
 
-/* Modal */
+.empty-state {
+    color: var(--text-secondary);
+}
+
+/* Existing modal */
 .modal {
     display: none;
     position: fixed;
@@ -424,7 +469,58 @@ tr:hover {
     border-color: var(--primary-color);
 }
 
+/* Landing schedule modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.schedule-modal-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.schedule-modal-card h3 {
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.landing-modal-aircraft {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.modal-help-text {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
 /* Responsive */
+@media (max-width: 900px) {
+    .queue-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .dashboard-overview {
         grid-template-columns: 1fr;
@@ -439,5 +535,23 @@ tr:hover {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
+    }
+
+    .queue-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .queue-item-details {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .schedule-modal-card {
+        padding: 22px;
     }
 }

@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛫 Air Traffic Control System</h1>
+            <h1>Air Traffic Control System</h1>
             <div class="status-bar">
                 <span class="status-item">
                     <span class="status-label">System Status:</span>
@@ -55,6 +55,14 @@
                         <span>Awaiting clearance</span>
                     </div>
                 </div>
+
+                <div class="stat-card">
+                    <h3>Takeoff Queue</h3>
+                    <div class="stat-number" id="takeoffQueueCount">0</div>
+                    <div class="stat-details">
+                        <span>Awaiting departure</span>
+                    </div>
+                </div>
             </section>
 
             <!-- Conflicts Alert -->
@@ -97,13 +105,27 @@
                 </div>
             </section>
 
-            <!-- Landing Queue -->
-            <section class="section">
-                <div class="section-header">
-                    <h2>Landing Queue (FIFO)</h2>
-                    <button class="btn btn-success" onclick="processNextInQueue()">Process Next</button>
-                </div>
-                <div id="landingQueueList" class="queue-list"></div>
+            <!-- Queue Grid -->
+            <section class="queue-grid">
+                <!-- Landing Queue -->
+                <section class="section">
+                    <div class="section-header">
+                        <h2>Landing Queue</h2>
+                        <button class="btn btn-success" onclick="processNextInQueue()">Process Next</button>
+                    </div>
+                    <div id="landingQueueList" class="queue-list"></div>
+                </section>
+
+                <!-- Takeoff Queue -->
+                <section class="section" id="takeoffQueueSection">
+                    <div class="section-header">
+                        <h2>Takeoff Queue</h2>
+                        <button class="btn btn-primary" onclick="processNextTakeoff()">Process Next</button>
+                    </div>
+                    <div id="takeoffQueueList" class="queue-list">
+                        <p class="empty-state">No aircraft in takeoff queue.</p>
+                    </div>
+                </section>
             </section>
         </main>
     </div>
@@ -159,6 +181,43 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add Runway</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Landing Time Modal -->
+    <div id="landingTimeModal" class="modal-overlay" style="display:none;">
+        <div class="schedule-modal-card">
+            <h3>Request Landing – Schedule Time</h3>
+            <p id="landingModalAircraftLabel" class="landing-modal-aircraft"></p>
+
+            <div class="form-group">
+                <label for="landingTimeInput">Scheduled Landing Time</label>
+                <input type="datetime-local" id="landingTimeInput">
+                <small class="modal-help-text">Leave blank to add with no scheduled time.</small>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeLandingModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="confirmLandingRequest()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <!-- Takeoff Time Modal -->
+    <div id="takeoffTimeModal" class="modal-overlay" style="display:none;">
+        <div class="schedule-modal-card">
+            <h3>Request Takeoff – Schedule Time</h3>
+            <p id="takeoffModalAircraftLabel" class="landing-modal-aircraft"></p>
+
+            <div class="form-group">
+                <label for="takeoffTimeInput">Scheduled Takeoff Time</label>
+                <input type="datetime-local" id="takeoffTimeInput">
+                <small class="modal-help-text">Pick a time, then confirm.</small>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeTakeoffModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="confirmTakeoffRequest()">Confirm</button>
+            </div>
         </div>
     </div>
 

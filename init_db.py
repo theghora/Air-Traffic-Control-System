@@ -44,7 +44,6 @@ def init_database():
             {'id': 'AC003', 'model': 'Cessna 172', 'size': AircraftSize.SMALL, 'status': AircraftStatus.PARKED},
             {'id': 'AC004', 'model': 'Boeing 777', 'size': AircraftSize.HEAVY, 'status': AircraftStatus.IN_AIR, 'altitude': 10000, 'speed': 250},
             {'id': 'AC005', 'model': 'Airbus A320', 'size': AircraftSize.MEDIUM, 'status': AircraftStatus.IN_AIR, 'altitude': 8000, 'speed': 220},
-            {'id': 'AC006', 'model': 'Bombardier CRJ', 'size': AircraftSize.SMALL, 'status': AircraftStatus.TAXIING},
         ]
 
         aircraft_list = []

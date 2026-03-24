@@ -9,12 +9,12 @@ class AircraftSize(str, Enum):
     MEDIUM = "Medium"
     HEAVY = "Heavy"
 
-class AircraftStatus(str, Enum):
+class AircraftStatus(Enum):
+    PARKED = "Parked"
+    TAXIING_TO_GATE = "Taxiing-To-Gate"
+    TAXIING_TO_RUNWAY = "Taxiing-To-Runway"
     IN_AIR = "In-Air"
     LANDING = "Landing"
-    TAXIING = "Taxiing"
-    PARKED = "Parked"
-    TAKEOFF = "Takeoff"
 
 class RunwayStatus(str, Enum):
     AVAILABLE = "Available"
@@ -31,8 +31,8 @@ class Aircraft(db.Model):
     current_runway_id = db.Column(db.Integer, db.ForeignKey('runway.id'), nullable=True)
     current_gate_id = db.Column(db.Integer, db.ForeignKey('gate.id'), nullable=True)
     altitude = db.Column(db.Integer, default=0)  # in feet
-    speed = db.Column(db.Integer, default=0)  # in knots
-    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    speed = db.Column(db.Integer, default=0)     # in knots
+    last_updated = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     # Relationships
     flights = db.relationship('Flight', backref='aircraft', lazy=True)
@@ -73,13 +73,11 @@ class Runway(db.Model):
     def is_suitable_for_aircraft(self, aircraft_size):
         """Check if runway length is suitable for aircraft size"""
         from config import Config
-
         min_length = {
             AircraftSize.SMALL: Config.RUNWAY_LENGTH_SMALL,
             AircraftSize.MEDIUM: Config.RUNWAY_LENGTH_MEDIUM,
             AircraftSize.HEAVY: Config.RUNWAY_LENGTH_HEAVY
         }
-
         return self.length >= min_length.get(aircraft_size, 0)
 
 class Taxiway(db.Model):
@@ -152,7 +150,35 @@ class LandingQueue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     aircraft_id = db.Column(db.String(10), db.ForeignKey('aircraft.id'), nullable=False)
     priority = db.Column(db.Integer, nullable=False)  # Lower number = higher priority
-    requested_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    requested_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    # ── NEW: optional scheduled landing time set by the controller ──────────
+    scheduled_landing_time = db.Column(db.DateTime, nullable=True)
+    # ────────────────────────────────────────────────────────────────────────
+    assigned_runway_id = db.Column(db.Integer, db.ForeignKey('runway.id'), nullable=True)
+
+    # Relationships
+    aircraft = db.relationship('Aircraft', foreign_keys=[aircraft_id])
+    runway = db.relationship('Runway', foreign_keys=[assigned_runway_id])
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'aircraft_id': self.aircraft_id,
+            'priority': self.priority,
+            'requested_at': self.requested_at.isoformat(),
+            'scheduled_landing_time': self.scheduled_landing_time.isoformat() if self.scheduled_landing_time else None,
+            'assigned_runway_id': self.assigned_runway_id
+        }
+
+
+# ── NEW: Takeoff Queue model ─────────────────────────────────────────────────
+class TakeoffQueue(db.Model):
+    __tablename__ = 'takeoff_queue'
+
+    id = db.Column(db.Integer, primary_key=True)
+    aircraft_id = db.Column(db.String(10), db.ForeignKey('aircraft.id'), nullable=False)
+    priority = db.Column(db.Integer, nullable=False)  # Lower number = higher priority (FIFO)
+    requested_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     assigned_runway_id = db.Column(db.Integer, db.ForeignKey('runway.id'), nullable=True)
 
     # Relationships
@@ -167,3 +193,4 @@ class LandingQueue(db.Model):
             'requested_at': self.requested_at.isoformat(),
             'assigned_runway_id': self.assigned_runway_id
         }
+# ─────────────────────────────────────────────────────────────────────────────
