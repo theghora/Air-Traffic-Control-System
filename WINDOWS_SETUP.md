@@ -1,10 +1,10 @@
-# 🪟 Windows Setup Guide - Air Traffic Control System
+# Windows Setup Guide - Air Traffic Control System
 
 Complete step-by-step guide for setting up the ATC System on Windows 10/11.
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required Software
 
@@ -37,7 +37,7 @@ Should show: `pip 20.x.x` or higher
 
 ---
 
-## 🚀 Installation Steps
+## Installation Steps
 
 ### Step 1: Open PowerShell
 
@@ -53,7 +53,7 @@ Should show: `pip 20.x.x` or higher
 cd C:\Users\tahag\Desktop\Projects\Air-Traffic-Control-System
 ```
 
-💡 **Tip:** You can type `cd` then drag the folder from File Explorer into PowerShell
+**Tip:** You can type `cd` then drag the folder from File Explorer into PowerShell
 
 Verify you're in the right directory:
 ```powershell
@@ -76,7 +76,7 @@ This creates a `venv` folder (takes 10-15 seconds)
 .\venv\Scripts\activate
 ```
 
-✅ Your prompt should change to: `(venv) PS C:\Users\tahag\Desktop\Projects\Air-Traffic-Control-System>`
+Your prompt should change to: `(venv) PS C:\Users\tahag\Desktop\Projects\Air-Traffic-Control-System>`
 
 #### 🔧 Troubleshooting: Script Execution Error
 
@@ -133,7 +133,7 @@ Adding flights...
 You can now start the application with: python app.py
 ```
 
-✅ A file `atc_system.db` is created in your project folder
+A file `atc_system.db` is created in your project folder
 
 ### Step 7: Start Backend Server
 
@@ -150,9 +150,9 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
 ```
 
-✅ Backend is running!
+Backend is running!
 
-⚠️ **Important:** Keep this PowerShell window open!
+**Important:** Keep this PowerShell window open!
 
 ### Step 8: Open Frontend Dashboard
 
@@ -165,7 +165,7 @@ You have two options:
 3. Double-click `index.html`
 4. Your default browser opens with the dashboard
 
-✅ Dashboard should load and show aircraft/runways
+Dashboard should load and show aircraft/runways
 
 #### **Option B: Python HTTP Server** (Recommended)
 
@@ -195,18 +195,18 @@ Serving HTTP on :: port 8080 (http://[::]:8080/) ...
 3. Open your browser
 4. Go to: **http://localhost:8080**
 
-✅ Dashboard loads with better compatibility
+Dashboard loads with better compatibility
 
 ---
 
-## 🎮 Using the System
+## Using the System
 
 ### First Look
 
 When dashboard loads, you should see:
 
 **Top Status Bar:**
-- 🟢 System Status: Healthy
+- System Status: Healthy
 - 0 Critical Conflicts
 - Last Update: (current time)
 
@@ -226,10 +226,10 @@ When dashboard loads, you should see:
 
 1. Find aircraft **AC004** (Boeing 777, In-Air) in the table
 2. Click the **"Request Landing"** button
-3. ✅ Aircraft appears in Landing Queue with Priority 1
+3. Aircraft appears in Landing Queue with Priority 1
 4. Click **"Process Next"** in Landing Queue section
-5. ✅ System assigns suitable runway
-6. ✅ Runway card shows "Occupied by AC004"
+5. System assigns suitable runway
+6. Runway card shows "Occupied by AC004"
 
 #### Test 2: Add New Aircraft
 
@@ -240,25 +240,25 @@ When dashboard loads, you should see:
    - **Size:** Heavy
    - **Status:** Parked
 3. Click **"Add Aircraft"**
-4. ✅ New aircraft appears in table
+4. New aircraft appears in table
 
 #### Test 3: Release Runway
 
 1. Find a runway with "Occupied" status
 2. Click the **"Release"** button
-3. ✅ Runway status changes to "Available"
+3. Runway status changes to "Available"
 
 #### Test 4: Test Constraints
 
 1. Try to add aircraft **AC002** (Airbus A380, Heavy) to landing queue
 2. Click "Process Next"
 3. If only short runways available (< 3500m):
-   - ❌ System shows error: "No suitable runway available"
-   - ✅ Constraint working correctly!
+   - System shows error: "No suitable runway available"
+   - Constraint working correctly!
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Run Automated Tests
 
@@ -280,11 +280,11 @@ test_atc.py::test_conflict_detection_runway PASSED          [100%]
 ======================== 6 passed in 2.45s =========================
 ```
 
-✅ All tests should pass!
+All tests should pass!
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Issue 1: "python is not recognized"
 
@@ -351,11 +351,11 @@ const API_BASE_URL = 'http://localhost:5001/api';
 ### Issue 4: Dashboard shows "Failed to connect"
 
 **Checklist:**
-1. ✅ Backend running? Check PowerShell window
-2. ✅ Visit http://localhost:5000/api/health - should show `{"status":"healthy"}`
-3. ✅ Check browser console (F12) for errors
-4. ✅ CORS issue? Ensure backend has Flask-CORS installed
-5. ✅ Firewall blocking? Temporarily disable and test
+1. Backend running? Check PowerShell window
+2. Visit http://localhost:5000/api/health - should show `{"status":"healthy"}`
+3. Check browser console (F12) for errors
+4. CORS issue? Ensure backend has Flask-CORS installed
+5. Firewall blocking? Temporarily disable and test
 
 **Solution:** Check API URL in `frontend/script.js`:
 ```javascript
@@ -415,7 +415,7 @@ pip list | findstr Flask
 
 ---
 
-## 📂 File Structure
+## File Structure
 
 ```
 Air-Traffic-Control-System/
@@ -445,7 +445,7 @@ Air-Traffic-Control-System/
 
 ---
 
-## 🎯 Daily Usage
+## Daily Usage
 
 ### Starting the System
 
@@ -497,32 +497,32 @@ This resets all aircraft, runways, and data back to initial state.
 ## 🎓 Learning Path
 
 ### Week 1: Getting Familiar
-1. ✅ Complete setup (above)
-2. ✅ Run tests: `pytest test_atc.py -v`
-3. ✅ Explore dashboard features
-4. ✅ Read [FEATURES_OVERVIEW.md](FEATURES_OVERVIEW.md)
+1. Complete setup (above)
+2. Run tests: `pytest test_atc.py -v`
+3. Explore dashboard features
+4. Read [FEATURES_OVERVIEW.md](FEATURES_OVERVIEW.md)
 
 ### Week 2: Understanding Code
-1. ✅ Open `models.py` - Understand database structure
-2. ✅ Open `services.py` - See constraint logic
-3. ✅ Open `app.py` - Explore API endpoints
-4. ✅ Read [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+1. Open `models.py` - Understand database structure
+2. Open `services.py` - See constraint logic
+3. Open `app.py` - Explore API endpoints
+4. Read [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 
 ### Week 3: Testing Features
-1. ✅ Test all constraint violations
-2. ✅ Try to create conflicts intentionally
-3. ✅ Monitor conflict detection
-4. ✅ Read [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+1. Test all constraint violations
+2. Try to create conflicts intentionally
+3. Monitor conflict detection
+4. Read [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
 
 ### Week 4: Advanced Topics
-1. ✅ Modify code (add new features)
-2. ✅ Write new tests
-3. ✅ Deploy to cloud (AWS guide)
-4. ✅ Document changes
+1. Modify code (add new features)
+2. Write new tests
+3. Deploy to cloud (AWS guide)
+4. Document changes
 
 ---
 
-## 💡 Pro Tips
+## Pro Tips
 
 ### PowerShell Tips
 
@@ -567,7 +567,7 @@ curl http://localhost:5000/api/dashboard
 
 ---
 
-## 🆘 Getting Help
+## Getting Help
 
 ### Documentation Files
 
@@ -604,7 +604,7 @@ A: Yes! Set `$env:PORT = 5001` before running `python app.py`
 
 ---
 
-## ✅ Verification Checklist
+## Verification Checklist
 
 Before considering setup complete, verify:
 
@@ -618,10 +618,3 @@ Before considering setup complete, verify:
 - [ ] Can process landing queue
 - [ ] All tests passing (pytest)
 
-If all checked ✅ - You're ready to go! 🎉
-
----
-
-**Need more help? Check the other documentation files or review this guide step by step.**
-
-**Happy Air Traffic Controlling! 🛫✈️🛬**

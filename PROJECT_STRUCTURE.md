@@ -1,6 +1,6 @@
 # Project Structure - Air Traffic Control System
 
-## 📁 Directory Overview
+## Directory Overview
 
 ```
 Air-Traffic-Control-System/
@@ -27,7 +27,7 @@ Air-Traffic-Control-System/
 └── PROJECT_STRUCTURE.md       # This file
 ```
 
-## 📄 File Descriptions
+## File Descriptions
 
 ### Backend Files
 
@@ -360,7 +360,7 @@ copy .env.example .env
 
 ---
 
-## 🔄 Data Flow
+## Data Flow
 
 ### Request Flow Example: Add to Landing Queue
 
@@ -408,7 +408,7 @@ Return conflicts with severity
 Display in dashboard if any found
 ```
 
-## 🎨 Design Patterns Used
+## Design Patterns Used
 
 1. **MVC Pattern**: Models (models.py), Controllers (app.py), Views (frontend/)
 2. **Service Layer**: Business logic separated in services.py
@@ -416,7 +416,7 @@ Display in dashboard if any found
 4. **ORM Pattern**: SQLAlchemy models abstract database
 5. **RESTful API**: Standard HTTP methods and resource URLs
 
-## 🔐 Security Considerations
+## Security Considerations
 
 ### Current Implementation
 - CORS enabled for development
@@ -432,7 +432,7 @@ Display in dashboard if any found
 - Add audit logging
 - Use environment-specific secrets
 
-## 🚀 Extension Points
+## Extension Points
 
 ### Easy to Add
 1. **New Aircraft Types**: Extend AircraftSize enum
@@ -451,7 +451,7 @@ Display in dashboard if any found
 7. Historical data analytics
 8. Multi-airport support
 
-## 📊 Database Relationships
+## Database Relationships
 
 ```
 Aircraft 1───n Flight
